@@ -1,0 +1,50 @@
+.TH LIBRGBA 7 librgba
+.SH NAME
+librgba - the rgba color library
+.SH DESCRIPTION
+A C89 library providing rgba color representation, parsing and printing.
+.SS struct rgba
+Represents a (possibly translucent) color.
+.sp
+.nf
+struct rgba {
+	double r;
+	double g;
+	double b;
+	double a;
+};
+.fi
+.P
+where the fields represent the red, green, blue, and alpha channels as doubles
+ranging from 0.0 to 1.0 inclusive. In the case of the alpha channel, 0.0 is
+fully translucent, and 1.0 is fully opaque.
+.SS
+int rgba_clone(struct rgba *,  const struct rgba * const);
+Copies the values of the source rgba struct into the destination struct.
+.P
+.SS
+int rgba_equal(const struct rgba * const, const struct rgba * const);
+Returns 0 if both rgba struct's values are equal, -1 otherwise.
+.P
+.SS
+int rgba_print(const struct rgba * const, char *, size_t);
+Prints the specified number of characters of the textual specification of an
+rgba to the specified buffer (as `rgb(r, g, b)` or `rgba(r, g, b, a)`).
+.P
+Returns the number of characters printed (excluding the terminating null byte),
+or a negative number on error.
+.SS
+int rgba_parse(struct rgba *, const char *, size_t);
+Parses a textual representation of a color, into the specified rgba struct. The
+string can be either one of:
+.nf
+- A standard name (see the X11 rgb.txt file)
+- An RGB as rgb(r,g,b)' (gives full opacity)
+- An RGBA as `rgba(r,g,b,a)'
+.fi
+where `r', `g', and `b' are integers ranging 0-255 or a percentage ranging
+0%-100%, and `a' is a decimal ranging 0-1. Mixed percents and non-percents in
+rgb() or rgba() specs are allowed.
+.P
+Returns 0 on success, and nagative value otherwise.
+

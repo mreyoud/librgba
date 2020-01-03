@@ -1,0 +1,7 @@
+NAME
+	librgba - the rgba color library
+
+DESCRIPTION
+	librgba is a conforming C89 utility library providing rgba format color
+	functionality.
+
